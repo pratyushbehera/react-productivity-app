@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { setUserSession } from './Utils/Common';
+import Typography from '@material-ui/core/Typography'
 
 import { Link, withRouter } from "react-router-dom";
 import loginImg from "../public/static/images/login.svg";
@@ -26,13 +27,19 @@ const useStyles = makeStyles({
     textBox: {
         width: '100%',
         marginBottom: 20
-    },
+    },    
     alignRight: {
         flexDirection: 'row-reverse'
     },
     media: {
         height: 0,
         paddingTop: '56.25%', // 16:9
+    },
+    marginBottom20:{        
+        marginBottom: 20
+    },
+    smallText:{
+        fontSize:12
     }
 });
 
@@ -136,6 +143,7 @@ function Login(props) {
                             helperText={error && error.password} />
                         <Button variant="outlined"
                             color="primary"
+                            className={classes.marginBottom20}
                             endIcon={
                                 loading ?
                                     <CircularProgress
@@ -147,19 +155,18 @@ function Login(props) {
                             onClick={handleLogin} disabled={loading} >
                             {loading ? 'Loading...' : 'Login'}
                         </Button>
-                    </FormControl>
-                    <Grid container>
-                        <Grid item xs={6}>
+                        <Typography className={classes.smallText}>Not registered?
                             <Link to="/register" style={{ textDecoration: 'none' }}>
-                                <Button color="primary">Register</Button>
+                                <Button color="primary" className={classes.smallText}>Register</Button>
                             </Link>
-                        </Grid>
-                        <Grid item xs={6}>
+                        </Typography>
+                        <Typography className={classes.smallText}>Forgot Password?
                             <Link to="/forgotpassword" style={{ textDecoration: 'none' }}>
-                                <Button color="secondary">Forgot Password ?</Button>
+                                <Button color="secondary" className={classes.smallText}>Click Here</Button>
                             </Link>
-                        </Grid>
-                    </Grid>
+                        </Typography>
+                    </FormControl>
+
                 </CardContent>
             </div>
             {error && error.message ? <CustomAlert message={error.message} open={true} severity="error" /> : null}

@@ -15,6 +15,11 @@ import ColoredCheckbox from '../ColoredCheckbox';
 const useStyles = makeStyles((theme) => ({
     listIcon: {
         minWidth: 10,
+    },
+    flexCenter:{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 }));
 
@@ -22,17 +27,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TaskList(props) {
     const classes = useStyles();
-    const dateArr = props.tasks && props.tasks.map(item => new Date(item.created).toLocaleDateString())
+    const tasks = props.tasks && props.displayCompleted ? props.tasks : props.tasks.filter(item=>!item.completed && (item.title.indexOf(props.filterText)> -1 || item.details.indexOf(props.filterText)> -1));
+    const dateArr = tasks &&  tasks.map(item => new Date(item.created).toLocaleDateString())
     let distinctDate = dateArr.filter((data, index) => {
         return dateArr.indexOf(data) === index;
     });
     if(distinctDate.length > 1)
     distinctDate = distinctDate.sort((a,b) => new Date(a) > new Date(b));
     
-    const dateWiseTask = distinctDate.map(date => props.tasks && props.tasks.filter(item => new Date(item.created).toLocaleDateString() === date));
-
-
-
+    const dateWiseTask = distinctDate.map(date => tasks && tasks.filter(item => new Date(item.created).toLocaleDateString() === date));
+if(tasks.length === 0){
+    return <Typography className={classes.flexCenter}>No task found </Typography>
+}
     return (
             <List>
                 {

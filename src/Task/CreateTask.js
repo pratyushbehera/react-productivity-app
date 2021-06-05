@@ -81,8 +81,7 @@ const CreateTask = (props) => {
                 .then(jsonResponse => {
                     setLoading(false);
                     if (!jsonResponse.error) {
-                        setError((prevErr) => ({ ...prevErr, message: jsonResponse.message }));
-                        props.history.push('/dashboard');
+                        props.history.push({pathname:'/dashboard' , state: { taskReload : true}});
                     }
                     else
                         setError((prevErr) => ({ ...prevErr, message: jsonResponse.message }));
@@ -149,8 +148,9 @@ const CreateTask = (props) => {
                                 }}
                             />
                         </MuiPickersUtilsProvider>
-                        <Button variant="contained" onClick={saveTask}
+                        <Button variant="outlined" onClick={saveTask}
                             disabled={loading}
+                            color="primary"
                             startIcon={!loading ? <Icon>save</Icon> : null}
                             endIcon={
                                 loading ?

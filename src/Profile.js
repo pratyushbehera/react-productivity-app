@@ -9,6 +9,10 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+
+
 
 const useStyles = makeStyles({
     root: {
@@ -16,6 +20,9 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    form: {
+        padding: 20
     },
     media: {
         width: 200,
@@ -28,22 +35,28 @@ const Profile = (props) => {
     return (
         <Grid container spacing={3}>
             <Hidden smDown>
-                <Grid item md={2}></Grid>
+                <Grid item md={3}></Grid>
             </Hidden>
-            <Grid item xs={12} sm={12} md={8}>
+            <Grid item xs={12} sm={12} md={6}>
                 <div className={classes.root + " glass"}>
-                        <CardMedia
-                            className={classes.media}
-                            image="/public/static/images/login.svg"
-                            title="Contemplative Reptile"
-                        />
-                        <CardContent>
-                            <Typography gutterBottom variant="h5" component="h2">
-                                FirstName LastName
+                    <CardMedia
+                        className={classes.media}
+                        image="/public/static/images/login.svg"
+                    />
+                    <CardContent>
+                        <FormControl className={classes.form} >
+                        {/* <form className={classes.form} noValidate autoComplete="off"> */}
+                            <TextField id="name" label="Name" value="FirstName LastName"/>
+                            <TextField id="username" label="Username" disabled value={"@"+props.user.userName}/>
+                            <TextField id="email" label="Email" disabled value={""+props.user.email}/>
+                        {/* </form> */}
+                        </FormControl>
+                        <Typography gutterBottom variant="h5" component="h2">
+                            
                             </Typography>
 
-                        </CardContent>
-                   
+                    </CardContent>
+
                 </div>
             </Grid>
         </Grid>

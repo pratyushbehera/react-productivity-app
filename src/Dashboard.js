@@ -12,7 +12,9 @@ const Dashboard = (props) => {
                 <WelcomePanel user={props.user} task={props.task} />
             </Grid>
             <Grid item xs={12} sm={12} md={8}>
-                <TaskApp user={props.user} task={props.task} done={props.done} delete={props.delete} />
+                <TaskApp user={props.user} task={props.task} done={props.done} delete={props.delete}
+                displayCompleted={props.displayCompleted} toggleDisplayCompleted={props.toggleDisplayCompleted}
+                filterText={props.filterText} handleFilterText={props.handleFilterText} />
             </Grid>
         </Grid>
     );

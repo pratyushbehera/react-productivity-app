@@ -8,6 +8,7 @@ import Layout from './Layout';
 import Login from './Login';
 import Register from './Register';
 import Dashboard from './Dashboard';
+import ForgotPassword from './ForgotPassword';
 import Notes from './Notes';
 import Profile from './Profile';
 import CustomAlert from './Alert';
@@ -49,7 +50,7 @@ const App = () => {
     }, []);
 
 
-
+    const [displayCompleted, setDisplayCompleted] = useState(false);
     const [taskList, setTaskList] = useState(null);
     const [error, setError] = useState(null);
     useEffect(() => {
@@ -71,6 +72,9 @@ const App = () => {
             });
     }, [user]);
 
+    const HandleDisplayCompleted = () => {
+        setDisplayCompleted(!displayCompleted);
+    }
 
     const deleteTask = (id) => {
         setError(null);
@@ -123,6 +127,10 @@ const App = () => {
                 }
             });
     }
+    const [filterText, setFilterText] = useState('');
+    const handleFilterText = () => {
+        setFilterText(event.target.value);
+    }
 
     if (authLoading && getToken()) {
         return <div className="content"><CircularProgress color="secondary" size={10} /> </div>
@@ -138,8 +146,10 @@ const App = () => {
                             <div>Hello</div>
                         </Route>
                         <Route path="/dashboard"
-                            render={(props) => getToken() ? <Dashboard {...props} user={user}
-                                task={taskList} done={doneTask} delete={deleteTask} /> : <Redirect to={{ pathname: '/login' }} />}
+                            render={(props) => getToken() ? <Dashboard {...props} user={user} 
+                                task={taskList} done={doneTask} delete={deleteTask}
+                                displayCompleted={displayCompleted} toggleDisplayCompleted={HandleDisplayCompleted}
+                                filterText={filterText} handleFilterText={handleFilterText} /> : <Redirect to={{ pathname: '/login' }} />}
                         />
                         <Route path="/notes"
                             render={(props) => getToken() ? <Notes {...props} user={user} /> : <Redirect to={{ pathname: '/login' }} />}
@@ -154,7 +164,7 @@ const App = () => {
                             render={(props) => !getToken() ? <Register {...props} user={user} /> : <Redirect to={{ pathname: '/dashboard' }} />}
                         />
                         <Route path="/forgotpassword"
-                            render={(props) => !getToken() ? <Register {...props} user={user} /> : <Redirect to={{ pathname: '/dashboard' }} />}
+                            render={(props) => !getToken() ? <ForgotPassword {...props} user={user} /> : <Redirect to={{ pathname: '/dashboard' }} />}
                         />
                         <Route path="/"
                             render={(props) => !getToken() ? <Login {...props} user={user} handleUser={setUser} /> : <Redirect to={{ pathname: '/dashboard' }} />}

@@ -11,7 +11,7 @@ module.exports = {
             template: './public/index.html'
         })
     ],
-    mode: "production",
+    mode: "development",
     entry: "./src/index.js",
     output: {
         filename: 'src/main_bundle.[hash].js',

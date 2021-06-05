@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography'
 import { setUserSession } from './Utils/Common';
 
 import { Link, withRouter } from "react-router-dom";
-
+import registerImg from "../public/static/images/register.svg";
 import CustomAlert from './Alert';
 const useStyles = makeStyles({
     grid: {
@@ -44,6 +44,12 @@ const useStyles = makeStyles({
     textBoxPassword:{
         width: '100%',
         marginBottom: 0
+    },
+    marginBottom20:{        
+        marginBottom: 20
+    },
+    smallText:{
+        fontSize:12
     }
 });
 
@@ -86,7 +92,7 @@ function Register(props) {
         }
         
         
-        if (userName !== "" && email !== "" && password !=="") {
+        if (userName !== "" && email !== "" && password !=="" && !passwordFormat.test(password) && !mailFormat.test(email)) {
             //Db interaction
             fetch("https://productivity.pratyush93.repl.co/register", {
                 method: "POST",
@@ -139,11 +145,6 @@ function Register(props) {
         if(pwd.match(/[^\w\s]/) !== null){
             setPasswordStrength(prev=> prev +25)
         }
-    }
-
-    const handleKeyPress = (event) => {
-        if (event.charCode === 13)
-            handleLogin()
     }
 
     const checkEmailExist = () => {
@@ -200,7 +201,7 @@ function Register(props) {
             <div className="glass">
                 <CardMedia
                     className={classes.media}
-                    image="/public/static/images/register.svg"
+                    image={registerImg}
                 />
                 <CardContent>
                     <FormControl className={classes.form} required>
@@ -233,7 +234,6 @@ function Register(props) {
                         <TextField id="reg_password"
                             size="small"
                             value={password}
-                            onKeyPress={handleKeyPress}
                             onChange={handlePassword}
                             type="password"
                             className={classes.textBoxPassword}
@@ -247,6 +247,7 @@ function Register(props) {
                         <LinearProgress className={classes.textBox} variant="determinate" value={passwordStrength} />
                         <Button variant="outlined"
                             color="primary"
+                            className={classes.marginBottom20}
                             endIcon={
                                 loading ?
                                     <CircularProgress
@@ -258,17 +259,12 @@ function Register(props) {
                             onClick={handleRegister} disabled={loading} >
                             {loading ? 'Loading...' : 'Register'}
                         </Button>
-                    </FormControl>
-                    <Grid container>
-                        <Grid item xs={8} className={classes.alignCenter}>
-                            <Typography>Already registered?</Typography>
-                        </Grid>
-                        <Grid item xs={4}>
+                        <Typography className={classes.smallText}>Already registered?
                             <Link to="/" style={{ textDecoration: 'none' }}>
-                                <Button color="primary">Login</Button>
+                                <Button color="primary" className={classes.smallText}>Login</Button>
                             </Link>
-                        </Grid>
-                    </Grid>
+                        </Typography>
+                    </FormControl>
                 </CardContent>
             </div>
             {error && error.message ? <CustomAlert message={error.message} open={true} severity="error"/> : null}
