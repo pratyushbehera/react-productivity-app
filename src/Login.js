@@ -11,7 +11,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { setUserSession } from './Utils/Common';
 
 import { Link, withRouter } from "react-router-dom";
-
+import loginImg from "../public/static/images/login.svg";
 import CustomAlert from './Alert';
 const useStyles = makeStyles({
     grid: {
@@ -106,7 +106,7 @@ function Login(props) {
             <div className="glass">
                 <CardMedia
                     className={classes.media}
-                    image="/public/static/images/login.svg"
+                    image={loginImg}
                 />
                 <CardContent>
                     <FormControl className={classes.form} required>
